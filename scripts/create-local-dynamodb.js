@@ -10,18 +10,16 @@
 require('dotenv').config({ path: '.env.local' });
 
 const { DynamoDBClient, CreateTableCommand, ListTablesCommand } = require('@aws-sdk/client-dynamodb');
+const { fromSSO } = require('@aws-sdk/credential-providers');
 
 // AWS Region and credentials configuration
 const region = process.env.AWS_REGION || 'us-east-1';
 const tableName = process.env.WAITLIST_TABLE || 'StaxaWaitlist';
 
-// Create a DynamoDB client
+// Create a DynamoDB client with SSO authentication
 const client = new DynamoDBClient({
   region,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-  },
+  credentials: fromSSO({ profile: process.env.AWS_PROFILE || undefined }),
 });
 
 async function createTable() {

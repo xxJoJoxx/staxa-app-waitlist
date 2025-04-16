@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
-import { dynamoDb, sesClient, WAITLIST_TABLE } from "@/lib/aws-config"
+import { dynamoDb, WAITLIST_TABLE } from "@/lib/aws-config"
 import { isValidEmail, generateId } from "@/lib/utils"
 import { PutCommand } from "@aws-sdk/lib-dynamodb"
-import { SendEmailCommand } from "@aws-sdk/client-ses"
+import { sendWaitlistConfirmationEmail } from "@/lib/email"
 
 export async function POST(request: Request) {
   try {
@@ -46,45 +46,9 @@ export async function POST(request: Request) {
       throw error
     }
 
-    // Send confirmation email
+    // Send confirmation email using Resend
     try {
-      const sesFromEmail = process.env.SES_FROM_EMAIL
-      
-      if (sesFromEmail) {
-        await sesClient.send(
-          new SendEmailCommand({
-            Destination: {
-              ToAddresses: [email],
-            },
-            Message: {
-              Body: {
-                Html: {
-                  Charset: "UTF-8",
-                  Data: `
-                    <html>
-                      <body>
-                        <h1>Welcome to Staxa Waitlist</h1>
-                        <p>Hello ${name || "there"},</p>
-                        <p>Thank you for joining our waitlist! We'll notify you as soon as we launch.</p>
-                        <p>Best regards,<br>The Staxa Team</p>
-                      </body>
-                    </html>
-                  `,
-                },
-                Text: {
-                  Charset: "UTF-8",
-                  Data: `Hello ${name || "there"},\n\nThank you for joining our waitlist! We'll notify you as soon as we launch.\n\nBest regards,\nThe Staxa Team`,
-                },
-              },
-              Subject: {
-                Charset: "UTF-8",
-                Data: "Welcome to Staxa Waitlist",
-              },
-            },
-            Source: sesFromEmail,
-          })
-        )
-      }
+      await sendWaitlistConfirmationEmail(email, name)
     } catch (emailError) {
       // Log email errors but don't fail the request
       console.error("Error sending confirmation email:", emailError)
