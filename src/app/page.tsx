@@ -7,6 +7,11 @@ import Link from "next/link"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { useState, useEffect, useRef } from "react"
+import { Amplify } from "aws-amplify"
+import outputs from "@/amplify_outputs.json"
+
+// Initialize Amplify
+Amplify.configure(outputs, { ssr: true });
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
