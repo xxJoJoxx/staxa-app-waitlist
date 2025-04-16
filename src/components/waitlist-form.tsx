@@ -9,10 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Loader2, CheckCircle } from "lucide-react"
 import { isValidEmail } from "@/lib/utils"
 
-type ApiError = {
-  message: string;
-}
-
 export default function WaitlistForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -57,7 +53,7 @@ export default function WaitlistForm() {
       }
 
       setStatus("success")
-    } catch (error: ApiError | unknown) {
+    } catch (error: unknown) {
       setStatus("error")
       const errorMessage = error instanceof Error ? error.message : "Something went wrong. Please try again."
       setErrorMessage(errorMessage)
