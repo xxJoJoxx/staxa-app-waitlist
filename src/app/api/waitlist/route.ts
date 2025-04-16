@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server"
-import { isValidEmail, generateId } from "@/lib/utils"
+import { isValidEmail } from "@/lib/utils"
 import { sendWaitlistConfirmationEmail } from "@/lib/email"
 import { generateClient } from "aws-amplify/api"
 import { Schema } from "../../../../amplify/data/resource"
-import { configureAmplify } from "@/lib/amplify-config"
+import { Amplify } from "aws-amplify"
+import amplifyOutputs from "../../../../amplify_outputs.json"
 
-// Initialize Amplify
-configureAmplify()
+// Initialize Amplify directly
+Amplify.configure(amplifyOutputs);
 
 // Initialize Amplify client
 const client = generateClient<Schema>()

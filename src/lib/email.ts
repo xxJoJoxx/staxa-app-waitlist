@@ -87,8 +87,9 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
     }
 
     return { success: true, messageId: data?.id };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error sending email:', error);
-    return { success: false, error: error.message };
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: errorMessage };
   }
 } 

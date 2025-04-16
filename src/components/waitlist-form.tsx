@@ -9,6 +9,10 @@ import { Label } from "@/components/ui/label"
 import { Loader2, CheckCircle } from "lucide-react"
 import { isValidEmail } from "@/lib/utils"
 
+type ApiError = {
+  message: string;
+}
+
 export default function WaitlistForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -53,9 +57,10 @@ export default function WaitlistForm() {
       }
 
       setStatus("success")
-    } catch (error: any) {
+    } catch (error: ApiError | unknown) {
       setStatus("error")
-      setErrorMessage(error.message || "Something went wrong. Please try again.")
+      const errorMessage = error instanceof Error ? error.message : "Something went wrong. Please try again."
+      setErrorMessage(errorMessage)
     }
   }
 
@@ -65,9 +70,9 @@ export default function WaitlistForm() {
         <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm border">
           <div className="flex flex-col items-center justify-center space-y-3 text-center">
             <CheckCircle className="h-12 w-12 text-green-500" />
-            <h3 className="text-xl font-bold">You're on the list!</h3>
+            <h3 className="text-xl font-bold">You&apos;re on the list!</h3>
             <p className="text-gray-500 dark:text-gray-400">
-              Thank you for joining our waitlist. We'll notify you when we launch.
+              Thank you for joining our waitlist. We&apos;ll notify you when we launch.
             </p>
           </div>
         </div>
@@ -109,7 +114,7 @@ export default function WaitlistForm() {
             )}
           </Button>
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            We'll never share your email with anyone else.
+            We&apos;ll never share your email with anyone else.
           </p>
         </form>
       )}
