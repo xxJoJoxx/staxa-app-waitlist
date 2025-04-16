@@ -5,12 +5,12 @@ import { Amplify } from 'aws-amplify';
 // Import outputs directly
 // In development, this comes from ampx sandbox
 // In production, Amplify hosting will create this file during build
-import amplifyOutputs from '../../amplify_outputs.json';
+import outputs from "@/amplify_outputs.json";
 
 /**
  * Configure the Amplify library
  * Call this function at the highest level of your application
  */
 export function configureAmplify() {
-  Amplify.configure(amplifyOutputs, { ssr: true });
+  Amplify.configure(outputs, { ssr: true });
 } 
