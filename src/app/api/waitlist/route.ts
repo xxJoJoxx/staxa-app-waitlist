@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         )
       }
 
-      // Create the waitlist entry
+      // Create the waitlist entry in the database
       await client.models.WaitlistEntry.create({
         email,
         name: name || "",
