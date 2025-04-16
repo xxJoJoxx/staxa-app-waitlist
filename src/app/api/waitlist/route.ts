@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server"
-import { dynamoDb, WAITLIST_TABLE } from "@/lib/aws-config"
 import { isValidEmail, generateId } from "@/lib/utils"
-import { PutCommand } from "@aws-sdk/lib-dynamodb"
 import { sendWaitlistConfirmationEmail } from "@/lib/email"
+import { generateClient } from "aws-amplify/api"
+import { Schema } from "../../../../amplify/data/resource"
+import { configureAmplify } from "@/lib/amplify-config"
+
+// Initialize Amplify
+configureAmplify()
+
+// Initialize Amplify client
+const client = generateClient<Schema>()
 
 export async function POST(request: Request) {
   try {
@@ -16,34 +23,36 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 })
     }
 
-    // Generate a unique ID for this waitlist entry
-    const id = generateId("waitlist")
+    // Generate a timestamp for the waitlist entry
     const timestamp = new Date().toISOString()
 
-    // Save to DynamoDB
     try {
-      await dynamoDb.send(
-        new PutCommand({
-          TableName: WAITLIST_TABLE,
-          Item: {
-            id,
-            email,
-            name: name || "",
-            joinedAt: timestamp,
-            status: "active",
-          },
-          // Prevent overwriting existing emails
-          ConditionExpression: "attribute_not_exists(email)",
-        })
-      )
-    } catch (error: any) {
-      if (error.name === "ConditionalCheckFailedException") {
+      // Check if email already exists using a direct query
+      const existingEntries = await client.models.WaitlistEntry.list({
+        filter: {
+          email: {
+            eq: email
+          }
+        }
+      })
+
+      if (existingEntries.data.length > 0) {
         return NextResponse.json(
           { error: "This email is already on our waitlist" },
           { status: 409 }
         )
       }
-      throw error
+
+      // Create the waitlist entry
+      await client.models.WaitlistEntry.create({
+        email,
+        name: name || "",
+        joinedAt: timestamp,
+        status: "active",
+      })
+    } catch (dbError) {
+      console.error("Database error:", dbError)
+      throw dbError
     }
 
     // Send confirmation email using Resend

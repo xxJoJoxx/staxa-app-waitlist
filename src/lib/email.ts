@@ -5,7 +5,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Email configuration
 const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@noreply.staxa.net';
-const DEFAULT_REPLY_TO = process.env.RESEND_REPLY_TO || 'support@staxa.net';
 
 /**
  * Sends a waitlist confirmation email to the user
@@ -14,7 +13,6 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
   try {
     const { data, error } = await resend.emails.send({
       from: DEFAULT_FROM,
-      replyTo: DEFAULT_REPLY_TO,
       to,
       subject: 'Welcome to the Staxa Waitlist!',
       html: `
@@ -66,13 +64,6 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
                           <li style="margin-bottom: 8px;">Manage your cloud infrastructure easily</li>
                           <li style="margin-bottom: 0;">Monitor your deployments in real-time</li>
                         </ul>
-                      </div>
-
-                      <!-- Support -->
-                      <div style="border-top: 1px solid #e5e7eb; padding-top: 24px; margin-top: 24px;">
-                        <p style="color: #6b7280; font-size: 14px; line-height: 20px; margin: 0;">
-                          If you have any questions or need assistance, feel free to reply to this email.
-                        </p>
                       </div>
                     </div>
 
