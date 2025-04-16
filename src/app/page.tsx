@@ -62,7 +62,7 @@ export default function Home() {
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+            <div className="flex flex-col md:grid md:grid-cols-[1fr_400px] md:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -82,26 +82,27 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
-                <div className="relative w-full h-full min-h-[300px] rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-6 shadow-lg">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full max-w-[400px] bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-                      <div className="space-y-6">
+              <div className="flex items-center justify-start md:justify-end mt-8 md:mt-0">
+                <div className="flex flex-col w-full max-w-[400px] md:max-w-[450px] xl:max-w-[500px] gap-4">
+                  {/* Deployment Card */}
+                  <div className="relative w-full rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden">
+                    <div className="p-5 sm:p-6">
+                      <div className="space-y-4 sm:space-y-5">
                         {/* Header */}
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Layers className="h-5 w-5 text-primary" />
-                            <span className="font-medium">New Deployment</span>
+                            <span className="font-medium text-sm sm:text-base">New Deployment</span>
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400">ID: stx_d7f3a2</div>
                         </div>
 
                         {/* Stack Selection */}
                         <div className="space-y-2">
-                          <div className="text-sm font-medium">Selected Stack</div>
+                          <div className="text-xs sm:text-sm font-medium">Selected Stack</div>
                           <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 dark:bg-primary/20">
-                              <Layers className="h-4 w-4 text-primary" />
+                            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-200 dark:bg-gray-700">
+                              <Layers className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                             </div>
                             <div>
                               <div className="text-sm font-medium">MERN Stack</div>
@@ -117,7 +118,7 @@ export default function Home() {
                           <div className="text-sm font-medium">Deployment Progress</div>
 
                           {/* Progress Steps */}
-                          <div className="space-y-2">
+                          <div className="space-y-4">
                             {/* Step 1 - Complete */}
                             <div className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
@@ -125,8 +126,8 @@ export default function Home() {
                               </div>
                               <div className="flex-1">
                                 <div className="text-sm">Initializing</div>
-                                <div className="h-1 w-full bg-green-100 dark:bg-green-900/30 rounded-full">
-                                  <div className="h-1 w-full bg-green-500 rounded-full"></div>
+                                <div className="h-2 w-full bg-green-100 dark:bg-green-900/30 rounded-full mt-1">
+                                  <div className="h-2 w-full bg-green-500 rounded-full"></div>
                                 </div>
                               </div>
                             </div>
@@ -138,8 +139,8 @@ export default function Home() {
                               </div>
                               <div className="flex-1">
                                 <div className="text-sm">Provisioning Resources</div>
-                                <div className="h-1 w-full bg-green-100 dark:bg-green-900/30 rounded-full">
-                                  <div className="h-1 w-full bg-green-500 rounded-full"></div>
+                                <div className="h-2 w-full bg-green-100 dark:bg-green-900/30 rounded-full mt-1">
+                                  <div className="h-2 w-full bg-green-500 rounded-full"></div>
                                 </div>
                               </div>
                             </div>
@@ -151,8 +152,8 @@ export default function Home() {
                               </div>
                               <div className="flex-1">
                                 <div className="text-sm">Deploying Application</div>
-                                <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full">
-                                  <div className="h-1 w-3/4 bg-blue-500 rounded-full"></div>
+                                <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full mt-1">
+                                  <div className="h-2 w-3/4 bg-blue-500 rounded-full"></div>
                                 </div>
                               </div>
                             </div>
@@ -164,7 +165,7 @@ export default function Home() {
                               </div>
                               <div className="flex-1">
                                 <div className="text-sm text-gray-500 dark:text-gray-400">Finalizing</div>
-                                <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full"></div>
+                                <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full mt-1"></div>
                               </div>
                             </div>
                           </div>
@@ -175,6 +176,33 @@ export default function Home() {
                           <div>Started 2 minutes ago</div>
                           <div>~1 minute remaining</div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Light Blue Card */}
+                  <div className="w-full rounded-xl bg-blue-50 dark:bg-blue-950/20 p-5 sm:p-6 shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+                        <Cpu className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <span className="font-medium">AI-Optimized Resources</span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                      Our AI analyzes your application and configures the optimal cloud resources for performance and cost efficiency.
+                    </p>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <div className="font-medium text-gray-800 dark:text-gray-200">CPU</div>
+                        <div className="text-gray-500">2 vCPUs</div>
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-800 dark:text-gray-200">Memory</div>
+                        <div className="text-gray-500">4 GB</div>
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-800 dark:text-gray-200">Storage</div>
+                        <div className="text-gray-500">50 GB SSD</div>
                       </div>
                     </div>
                   </div>
@@ -603,12 +631,12 @@ export default function Home() {
                                   {/* Progress Steps */}
                                   <div className="space-y-2">
                                     {/* Step 1 - Complete */}
-                                    <div className="flex items-center gap-3">
-                                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-                                        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 dark:text-green-400" />
                                       </div>
                                       <div className="flex-1">
-                                        <div className="text-sm">Initializing</div>
+                                        <div className="text-xs sm:text-sm">Initializing</div>
                                         <div className="h-1 w-full bg-green-100 dark:bg-green-900/30 rounded-full">
                                           <div className="h-1 w-full bg-green-500 rounded-full"></div>
                                         </div>
@@ -616,12 +644,12 @@ export default function Home() {
                                     </div>
 
                                     {/* Step 2 - Complete */}
-                                    <div className="flex items-center gap-3">
-                                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-                                        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 dark:text-green-400" />
                                       </div>
                                       <div className="flex-1">
-                                        <div className="text-sm">Provisioning Resources</div>
+                                        <div className="text-xs sm:text-sm">Provisioning Resources</div>
                                         <div className="h-1 w-full bg-green-100 dark:bg-green-900/30 rounded-full">
                                           <div className="h-1 w-full bg-green-500 rounded-full"></div>
                                         </div>
@@ -629,12 +657,12 @@ export default function Home() {
                                     </div>
 
                                     {/* Step 3 - In Progress */}
-                                    <div className="flex items-center gap-3">
-                                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
-                                        <Loader2 className="h-4 w-4 text-blue-600 dark:text-blue-400 animate-spin" />
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+                                        <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400 animate-spin" />
                                       </div>
                                       <div className="flex-1">
-                                        <div className="text-sm">Deploying Application</div>
+                                        <div className="text-xs sm:text-sm">Deploying Application</div>
                                         <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full">
                                           <div className="h-1 w-3/4 bg-blue-500 rounded-full"></div>
                                         </div>
@@ -642,12 +670,12 @@ export default function Home() {
                                     </div>
 
                                     {/* Step 4 - Pending */}
-                                    <div className="flex items-center gap-3">
-                                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                                        <div className="h-2 w-2 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                                        <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                                       </div>
                                       <div className="flex-1">
-                                        <div className="text-sm text-gray-500 dark:text-gray-400">Finalizing</div>
+                                        <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Finalizing</div>
                                         <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full"></div>
                                       </div>
                                     </div>
@@ -658,7 +686,7 @@ export default function Home() {
                                 <div className="py-3"></div>
 
                                 {/* Estimated Time */}
-                                <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <div className="flex justify-between items-center text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
                                   <div>Started 2 minutes ago</div>
                                   <div>~1 minute remaining</div>
                                 </div>
@@ -702,7 +730,7 @@ export default function Home() {
                 <WaitlistForm />
               </div>
             </div>
-        </div>
+          </div>
         </section>
       </main>
       <Footer />
