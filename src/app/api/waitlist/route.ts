@@ -4,7 +4,7 @@ import { sendWaitlistConfirmationEmail } from "@/lib/email"
 import { generateClient } from "aws-amplify/api"
 import { Schema } from "../../../../amplify/data/resource"
 import { Amplify } from "aws-amplify"
-import outputs from "@/amplify_outputs.json"
+import outputs from "../../../../amplify_outputs.json"
 
 // Initialize Amplify directly
 Amplify.configure(outputs);
