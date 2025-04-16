@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB table for Staxa waitlist application"
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: dev
+    Description: Environment name (dev, prod)
+    AllowedValues:
+      - dev
+      - prod
+
+Resources:
+  WaitlistTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "StaxaWaitlist-${EnvironmentName}"
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: email
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Application
+          Value: StaxaWaitlist
+
+Outputs:
+  WaitlistTableName:
+    Description: Name of the DynamoDB table for waitlist entries
+    Value: !Ref WaitlistTable
+  WaitlistTableArn:
+    Description: ARN of the DynamoDB table for waitlist entries
+    Value: !GetAtt WaitlistTable.Arn 

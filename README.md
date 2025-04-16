@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Staxa App Waitlist
+
+A waitlist application for the Staxa cloud deployment platform.
+
+## Features
+
+- Modern UI built with Next.js and TailwindCSS
+- AWS integration for backend services
+- DynamoDB for data storage
+- SES for email notifications
+- CloudFormation templates for infrastructure deployment
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 16.x or later
+- npm or yarn
+- AWS CLI configured with your credentials
+- An AWS account with appropriate permissions
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd staxa-app-waitlist
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env.local` file in the root directory with the following variables:
+```
+# AWS Configuration
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your-access-key-id
+AWS_SECRET_ACCESS_KEY=your-secret-access-key
+
+# DynamoDB Tables
+WAITLIST_TABLE=StaxaWaitlist-dev
+
+# SES Configuration
+SES_FROM_EMAIL=noreply@yourdomain.com
+```
+
+4. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AWS Infrastructure Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Creating DynamoDB Table
 
-## Learn More
+1. Navigate to the AWS directory
+```bash
+cd aws
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. Run the deployment script
+```bash
+./deploy.sh dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This will create:
+- An S3 bucket for deployments
+- A DynamoDB table for waitlist entries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Configuring Amazon SES
 
-## Deploy on Vercel
+1. Verify your domain in the AWS SES console
+2. Follow the DNS configuration instructions to verify domain ownership
+3. Update your `.env.local` file with the correct `SES_FROM_EMAIL` value
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To deploy to production:
+
+1. Update the environment variables for production
+2. Run the deployment script with the prod environment:
+```bash
+cd aws
+./deploy.sh prod
+```
+
+3. Deploy the application to your hosting service (Vercel, AWS Amplify, etc.)
+
+## API Documentation
+
+### Waitlist API
+
+**Endpoint**: `/api/waitlist`
+**Method**: POST
+**Body**:
+```json
+{
+  "name": "John Doe", // optional
+  "email": "john@example.com" // required
+}
+```
+
+**Success Response**:
+```json
+{
+  "success": true,
+  "message": "Successfully joined waitlist"
+}
+```
+
+**Error Responses**:
+- 400: Invalid request (missing email, invalid format)
+- 409: Email already exists in waitlist
+- 500: Server error
+
+## Security Considerations
+
+- Use IAM roles with least privilege
+- Store AWS credentials securely
+- Consider using AWS Cognito for user authentication in future iterations
+- Enable encryption at rest for the DynamoDB table
+
+## License
+
+[MIT](LICENSE)
