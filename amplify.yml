@@ -13,6 +13,7 @@ frontend:
       commands:
         - echo "RESEND_API_KEY=$RESEND_API_KEY" >> .env.local
         - echo "RESEND_FROM_EMAIL=$RESEND_FROM_EMAIL" >> .env.local
+        - cat .env.local
         - npm run build
   artifacts:
     baseDirectory: .next
