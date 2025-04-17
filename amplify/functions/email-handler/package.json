@@ -1,0 +1,9 @@
+{
+  "name": "email-handler",
+  "version": "1.0.0",
+  "description": "Lambda function for sending emails using Resend",
+  "main": "index.js",
+  "dependencies": {
+    "resend": "^4.3.0"
+  }
+} 
