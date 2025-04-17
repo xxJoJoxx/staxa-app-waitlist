@@ -1,12 +1,12 @@
 import { Resend } from 'resend';
-
+import type { Handler } from 'aws-lambda';
 // Initialize Resend with API key from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Email configuration
 const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@noreply.staxa.app';
 
-export const handler = async (event: any) => {
+export const handler: Handler = async (event, context) => {
   console.log('Email handler received event:', JSON.stringify(event, null, 2));
   
   try {
