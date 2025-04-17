@@ -8,7 +8,7 @@ backend:
         - echo "RESEND_API_KEY=$RESEND_API_KEY" >> .env.local
         - echo "RESEND_FROM_EMAIL=$RESEND_FROM_EMAIL" >> .env.local
         - npm ci --cache .npm --prefer-offline
-        - (cd staxa-app-waitlist/amplify/functions/email-handler && npm ci --cache ../../../../.npm --prefer-offline)
+        - (cd amplify/functions/email-handler && npm ci --cache ../../.npm --prefer-offline)
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
