@@ -1,13 +1,3 @@
-import { generateClient } from 'aws-amplify/api';
-
-// Type for email function parameters
-type EmailParams = {
-  to: string;
-  subject: string;
-  html: string;
-  from?: string;
-};
-
 /**
  * Sends a waitlist confirmation email to the user
  */
