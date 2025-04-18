@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Email configuration
 const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@noreply.staxa.app';
 
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async (event) => {
   console.log('Email handler received event:', JSON.stringify(event, null, 2));
   
   try {
