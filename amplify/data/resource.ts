@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { emailHandler } from '../functions/email-handler/resource';
 
 /*
  * Define the WaitlistEntry model for storing waitlist signups
@@ -18,6 +19,19 @@ const schema = a.schema({
       // Allow authenticated admins to do everything
       allow.authenticated().to(['create', 'read', 'update', 'delete']),
     ]),
+
+  // Add our email handler as a custom query
+  sendEmail: a
+    .query()
+    .arguments({
+      to: a.string().required(),
+      subject: a.string().required(),
+      html: a.string().required(),
+      from: a.string()
+    })
+    .returns(a.string()) // Simplified return type for now
+    .authorization(allow => [allow.guest()])
+    .handler(a.handler.function(emailHandler)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
