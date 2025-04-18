@@ -2,8 +2,10 @@
   "name": "email-handler",
   "version": "1.0.0",
   "description": "Lambda function for sending emails using Resend",
+  "type": "module",
   "main": "index.js",
   "dependencies": {
-    "resend": "^4.3.0"
+    "resend": "^4.3.0",
+    "aws-lambda": "^1.0.7"
   }
 } 

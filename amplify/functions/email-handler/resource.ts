@@ -1,11 +1,9 @@
-import { defineFunction, secret } from '@aws-amplify/backend';
+import { defineFunction } from '@aws-amplify/backend';
 
-// Using named export to match the pattern used by auth and data resources
+// Simple function definition following the docs example
 export const emailHandler = defineFunction({
-  name: 'email-handler',
-  entry: './handler.ts',
-  environment: {
-    RESEND_API_KEY: secret('RESEND_API_KEY'),
-    RESEND_FROM_EMAIL: secret('RESEND_FROM_EMAIL')
-  }
+  // Use function name that matches the directory name
+  name: 'email-handler', 
+  // Explicit handler path
+  entry: './handler.ts'
 }); 

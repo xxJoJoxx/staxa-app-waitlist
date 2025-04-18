@@ -1,20 +1,26 @@
-import { Resend } from 'resend';
 import type { Handler } from 'aws-lambda';
-// Initialize Resend with API key from environment variables
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { Resend } from 'resend';
 
-// Email configuration
+// Getting API key from environment
+const resendApiKey = process.env.RESEND_API_KEY || '';
+const resend = new Resend(resendApiKey);
+
+// Default FROM email address
 const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@noreply.staxa.app';
 
 export const handler: Handler = async (event) => {
   console.log('Email handler received event:', JSON.stringify(event, null, 2));
   
   try {
-    // Check if required fields are in the event
+    // Check for required fields
     if (!event.to || !event.subject || !event.html) {
-      throw new Error('Missing required fields: to, subject, or html');
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Missing required fields: to, subject, or html' })
+      };
     }
     
+    // Send email with Resend
     const { data, error } = await resend.emails.send({
       from: event.from || DEFAULT_FROM,
       to: event.to,
@@ -23,25 +29,24 @@ export const handler: Handler = async (event) => {
     });
     
     if (error) {
-      throw new Error(`Failed to send email: ${error.message}`);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ success: false, error: error.message })
+      };
     }
     
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        messageId: data?.id
-      })
+      body: JSON.stringify({ success: true, messageId: data?.id })
     };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error('Error sending email:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        success: false,
-        error: errorMessage
+      body: JSON.stringify({ 
+        success: false, 
+        error: error.message || 'Unknown error'
       })
     };
   }
