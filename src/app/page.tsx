@@ -2,7 +2,7 @@
 
 import WaitlistForm from "@/components/waitlist-form"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, Cpu, Layers, Loader2, Zap, Database, Code, Server, Globe, ChevronLeft, ChevronRight, Github, GitBranch, Box, Network, Activity, Shield, LineChart, BarChart, Settings, LayoutGrid, Container, Package, Terminal, TestTube, Radio, GitCompare, GitMerge, X, AlertTriangle } from "lucide-react"
+import { ArrowRight, CheckCircle, Cpu, Layers, Loader2, Zap, Database, Code, Server, Globe, ChevronLeft, ChevronRight, Github, GitBranch, Box, Network, Activity, Shield, LineChart, BarChart, Settings, LayoutGrid, Container, Package, Terminal, TestTube, GitMerge, X, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
