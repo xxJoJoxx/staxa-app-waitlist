@@ -99,7 +99,7 @@ export default function WaitlistForm() {
             />
             {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
           </div>
-          <Button type="submit" className="w-full" disabled={status === "loading"}>
+          <Button type="submit" className="w-full gradient-btn" disabled={status === "loading"}>
             {status === "loading" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
