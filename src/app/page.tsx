@@ -2,7 +2,7 @@
 
 import WaitlistForm from "@/components/waitlist-form"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, Cpu, Layers, Loader2, Zap, Database, Code, Server, Globe, ChevronLeft, ChevronRight, Github, GitBranch, Box, Network, Activity, Shield, LineChart, BarChart, Settings, LayoutGrid, Container, Package, Terminal, TestTube, GitMerge, X, AlertTriangle } from "lucide-react"
+import { ArrowRight, CheckCircle, Cpu, Layers, Loader2, Zap, Database, Code, Server, Globe, ChevronLeft, ChevronRight, Github, GitBranch, Box, Network, Activity, Shield, LineChart, BarChart, Settings, LayoutGrid, Container, Package, Terminal, TestTube, GitMerge, X, AlertTriangle, BrainCircuit, FileCode, Sparkles, Play } from "lucide-react"
 import Link from "next/link"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
@@ -31,11 +31,11 @@ export default function Home() {
   };
 
   const nextFeatureSlide = () => {
-    setFeatureSlide((prev) => (prev === 5 ? 0 : prev + 1));
+    setFeatureSlide((prev) => (prev === 6 ? 0 : prev + 1));
   };
   
   const prevFeatureSlide = () => {
-    setFeatureSlide((prev) => (prev === 0 ? 5 : prev - 1));
+    setFeatureSlide((prev) => (prev === 0 ? 6 : prev - 1));
   };
 
   const pauseCarousel = () => {
@@ -823,7 +823,8 @@ export default function Home() {
                      onTouchStart={pauseFeatureCarousel}
                      onTouchEnd={resumeFeatureCarousel}>
                   <div className="flex items-center justify-between mb-8">
-                    <div className="flex gap-3 flex-wrap">
+                    {/* Feature Navigation */}
+                    <div className="flex flex-wrap gap-2 justify-center">
                       <button 
                         className={`rounded-full px-3 py-1 text-xs font-medium ${featureSlide === 0 ? 'bg-primary text-white' : 'bg-white/80 dark:bg-gray-800/80'}`}
                         onClick={() => {
@@ -831,7 +832,7 @@ export default function Home() {
                           pauseFeatureCarousel();
                         }}
                       >
-                        Infrastructure
+                        Overview
                       </button>
                       <button 
                         className={`rounded-full px-3 py-1 text-xs font-medium ${featureSlide === 1 ? 'bg-primary text-white' : 'bg-white/80 dark:bg-gray-800/80'}`}
@@ -840,7 +841,7 @@ export default function Home() {
                           pauseFeatureCarousel();
                         }}
                       >
-                        Development
+                        Visualization
                       </button>
                       <button 
                         className={`rounded-full px-3 py-1 text-xs font-medium ${featureSlide === 2 ? 'bg-primary text-white' : 'bg-white/80 dark:bg-gray-800/80'}`}
@@ -877,6 +878,15 @@ export default function Home() {
                         }}
                       >
                         Testing
+                      </button>
+                      <button 
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${featureSlide === 6 ? 'bg-primary text-white' : 'bg-white/80 dark:bg-gray-800/80'}`}
+                        onClick={() => {
+                          setFeatureSlide(6);
+                          pauseFeatureCarousel();
+                        }}
+                      >
+                        AI-Powered Code Editor
                       </button>
                     </div>
                     <div className="flex gap-2">
@@ -1978,6 +1988,344 @@ export default function Home() {
                               <ArrowRight className="h-3 w-3" />
                               <span>Test History</span>
                             </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* AI-Powered Code Editor */}
+                  <div className={`grid grid-cols-1 gap-8 ${featureSlide === 6 ? 'block' : 'hidden'}`}>
+                    <div className="space-y-4 flex flex-col items-center text-center mb-6">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20">
+                        <BrainCircuit className="h-6 w-6 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold">AI-Powered Code Editor</h3>
+                      <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
+                        Write, debug, and deploy your code directly from the browser with our integrated code editor 
+                        featuring real-time AI suggestions, code optimization, and error checking.
+                      </p>
+                    </div>
+                    
+                    {/* Code Editor UI */}
+                    <div className="rounded-lg border border-gray-200 dark:border-gray-800 shadow-lg overflow-hidden bg-white dark:bg-gray-900">
+                      {/* Editor Header */}
+                      <div className="border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex space-x-1.5">
+                            <div className="h-3 w-3 rounded-full bg-red-500"></div>
+                            <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+                            <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                          </div>
+                          <div className="text-sm font-medium">server.js</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                            <FileCode className="h-4 w-4" />
+                          </button>
+                          <button className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                            <Settings className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Editor Layout */}
+                      <div className="flex h-[500px]">
+                        {/* File Explorer */}
+                        <div className="w-48 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 p-3 hidden sm:block">
+                          <div className="font-medium text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Project Files</div>
+                          <ul className="text-sm space-y-1">
+                            <li className="flex items-center gap-1.5 text-primary font-medium">
+                              <FileCode className="h-3.5 w-3.5" />
+                              <span>server.js</span>
+                            </li>
+                            <li className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                              <FileCode className="h-3.5 w-3.5 text-gray-500" />
+                              <span>package.json</span>
+                            </li>
+                            <li className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                              <FileCode className="h-3.5 w-3.5 text-gray-500" />
+                              <span>database.js</span>
+                            </li>
+                            <li className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                              <FileCode className="h-3.5 w-3.5 text-gray-500" />
+                              <span>routes.js</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        {/* Editor Area */}
+                        <div className="flex-1 overflow-auto">
+                          <div className="h-full">
+                            {/* Code Area */}
+                            <div className="relative bg-gray-50 dark:bg-gray-800 h-full p-4">                              
+                              {/* AI Insights Badge */}
+                              <div className="absolute right-4 top-3 flex items-center gap-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1.5 rounded-md text-xs border border-indigo-200 dark:border-indigo-800 shadow-sm">
+                                <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
+                                <span className="font-medium">1 AI insight available</span>
+                              </div>
+                              
+                              {/* AI Insights Badge */}
+                              <div className="absolute right-4 top-3 flex items-center gap-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1.5 rounded-md text-xs border border-indigo-200 dark:border-indigo-800 shadow-sm">
+                                <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
+                                <span className="font-medium">1 AI insight available</span>
+                              </div>
+                              
+                              {/* Code with Line Numbers */}
+                              <div className="font-mono text-sm leading-relaxed mt-6">
+                                <div className="flex">
+                                  <div className="text-gray-400 dark:text-gray-500 select-none pr-4 text-right">
+                                    <div>1</div>
+                                    <div>2</div>
+                                    <div>3</div>
+                                    <div>4</div>
+                                    <div>5</div>
+                                    <div>6</div>
+                                    <div>7</div>
+                                    <div>8</div>
+                                    <div>9</div>
+                                    <div>10</div>
+                                    <div>11</div>
+                                    <div>12</div>
+                                    <div>13</div>
+                                    <div>14</div>
+                                    <div>15</div>
+                                    <div>16</div>
+                                    <div>17</div>
+                                    <div>18</div>
+                                  </div>
+                                  <div className="text-gray-800 dark:text-gray-200 flex-1 relative">
+                                    <pre className="m-0 overflow-x-auto">
+                                      <span className="block text-gray-500">{"// Express server setup"}</span>
+                                      <span className="block">
+                                        <span className="text-indigo-600 dark:text-indigo-400">{"const"}</span>
+                                        <span>{" "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"express"}</span>
+                                        <span>{" = "}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"require"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-amber-600 dark:text-amber-400">{"'express'"}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">
+                                        <span className="text-indigo-600 dark:text-indigo-400">{"const"}</span>
+                                        <span>{" "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"app"}</span>
+                                        <span>{" = "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"express"}</span>
+                                        <span>{"();"}</span>
+                                      </span>
+                                      <span className="block">
+                                        <span className="text-indigo-600 dark:text-indigo-400">{"const"}</span>
+                                        <span>{" "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"port"}</span>
+                                        <span>{" = "}</span>
+                                        <span className="text-purple-600 dark:text-purple-400">{"process"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"env"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"PORT"}</span>
+                                        <span>{" || "}</span>
+                                        <span className="text-orange-600 dark:text-orange-400">{"3000"}</span>
+                                        <span>{";"}</span>
+                                      </span>
+                                      <span className="block">&nbsp;</span>
+                                      <span className="block text-gray-500">{"// Middlewares"}</span>
+                                      <span className="block">
+                                        <span className="text-green-600 dark:text-green-400">{"app"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"use"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"express"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"json"}</span>
+                                        <span>{"());"}</span>
+                                      </span>
+                                      <span className="block">
+                                        <span className="text-green-600 dark:text-green-400">{"app"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"use"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"express"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"urlencoded"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-gray-800 dark:text-gray-200">{"{\"{ extended: true }\""}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">&nbsp;</span>
+                                      <span className="block text-gray-500">{"// Routes"}</span>
+                                      <span className="block">
+                                        <span className="text-indigo-600 dark:text-indigo-400">{"const"}</span>
+                                        <span>{" "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"routes"}</span>
+                                        <span>{" = "}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"require"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-amber-600 dark:text-amber-400">{"'./src/routes'"}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">
+                                        <span className="text-green-600 dark:text-green-400">{"app"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"use"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-amber-600 dark:text-amber-400">{"'/api'"}</span>
+                                        <span>{", "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"routes"}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">&nbsp;</span>
+                                      <span className="block text-gray-500">{"// Database connection"}</span>
+                                      <span className="block">
+                                        <span className="text-indigo-600 dark:text-indigo-400">{"const"}</span>
+                                        <span>{" "}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"db"}</span>
+                                        <span>{" = "}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"require"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-amber-600 dark:text-amber-400">{"'./src/database'"}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">
+                                        <span className="bg-indigo-50 dark:bg-indigo-900/20 rounded px-1 py-0.5">
+                                          <span className="text-green-600 dark:text-green-400">{"db"}</span>
+                                          <span>{"."}</span>
+                                          <span className="text-blue-600 dark:text-blue-400">{"connect"}</span>
+                                          <span>{"();"}</span>
+                                        </span>
+                                      </span>
+                                      <span className="block">&nbsp;</span>
+                                      <span className="block">
+                                        <span className="text-green-600 dark:text-green-400">{"app"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"listen"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-green-600 dark:text-green-400">{"port"}</span>
+                                        <span>{", () => {"}</span>
+                                      </span>
+                                      <span className="block pl-4">
+                                        <span className="text-purple-600 dark:text-purple-400">{"console"}</span>
+                                        <span>{"."}</span>
+                                        <span className="text-blue-600 dark:text-blue-400">{"log"}</span>
+                                        <span>{"("}</span>
+                                        <span className="text-amber-600 dark:text-amber-400">{"`Server running on port ${port}`"}</span>
+                                        <span>{");"}</span>
+                                      </span>
+                                      <span className="block">{"})"}</span>
+                                    </pre>
+                                    
+                                    {/* db.connect() tooltip */}
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 top-[260px] w-64 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-10 overflow-hidden">
+                                      <div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                                        <div className="flex items-center justify-between">
+                                          <div className="flex items-center gap-1.5">
+                                            <Database className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                                            <span className="font-medium text-xs">MongoDB Connection</span>
+                                          </div>
+                                          <div className="flex items-center gap-1">
+                                            <button className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                                              <X className="h-3.5 w-3.5" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="p-3 text-xs">
+                                        <p className="text-gray-700 dark:text-gray-300 mb-2">
+                                          Establishes connection to MongoDB database defined in <span className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">{`./src/database.js`}</span>
+                                        </p>
+                                        <div className="mb-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+                                          <div className="flex items-center gap-1.5 mb-1.5">
+                                            <Sparkles className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                                            <span className="font-medium text-gray-900 dark:text-gray-100">AI Suggestion</span>
+                                          </div>
+                                          <p className="text-gray-700 dark:text-gray-300">
+                                            Add error handling to prevent application crashes if the database connection fails.
+                                          </p>
+                                        </div>
+                                        <div className="flex gap-2 mt-2">
+                                          <button className="flex-1 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded text-xs font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/30">
+                                            Apply Suggestion
+                                          </button>
+                                          <button className="flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 w-6 h-6 rounded text-xs hover:bg-gray-200 dark:hover:bg-gray-700">
+                                            <ChevronRight className="h-3.5 w-3.5" />
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Code Performance Optimization */}
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 top-[260px] w-[400px] bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-10 overflow-hidden">
+                                      <div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex items-center gap-2">
+                                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+                                          <BrainCircuit className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                                        </div>
+                                        <span className="font-medium text-sm">Code Performance Optimization</span>
+                                        <button className="ml-auto text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                                          <X className="h-3.5 w-3.5" />
+                                        </button>
+                                      </div>
+                                      <div className="p-4 text-sm">
+                                        <p className="text-gray-600 dark:text-gray-300 mb-3">
+                                          We detected a potential issue with the database connection.
+                                        </p>
+                                        <div className="bg-red-50 dark:bg-red-900/10 px-4 py-2 rounded-t-md font-mono text-xs">
+                                          <div className="text-red-600 dark:text-red-400">{"- db.connect();"}</div>
+                                        </div>
+                                        <div className="bg-green-50 dark:bg-green-900/10 px-4 py-2 rounded-b-md font-mono text-xs mb-3">
+                                          <div className="text-green-600 dark:text-green-400">{"+ try {"}</div>
+                                          <div className="text-green-600 dark:text-green-400 pl-4">{"db.connect();"}</div>
+                                          <div className="text-green-600 dark:text-green-400">{"+ } catch (error) {"}</div>
+                                          <div className="text-green-600 dark:text-green-400 pl-4">{"console.error('Database connection failed:', error);"}</div>
+                                          <div className="text-green-600 dark:text-green-400 pl-4">{"// Implement fallback strategy or graceful exit"}</div>
+                                          <div className="text-green-600 dark:text-green-400">{"+ }"}</div>
+                                        </div>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                                          This change prevents application crashes if the database connection fails.
+                                        </p>
+                                        <div className="flex gap-3">
+                                          <button className="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                                            Review Changes
+                                          </button>
+                                          <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium text-white transition-colors">
+                                            Apply
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Code Editor Bottom Bar */}
+                            <div className="flex items-center justify-between bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 px-4 py-3">
+                              <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-xs">
+                                  <CheckCircle className="h-3.5 w-3.5" />
+                                  <span>No errors</span>
+                                </div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1.5">
+                                  <div className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/50">
+                                    <Sparkles className="h-2.5 w-2.5 text-indigo-600 dark:text-indigo-400" />
+                                  </div>
+                                  <span>AI optimized</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <button className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                                  Format
+                                </button>
+                                <button className="text-xs px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 rounded-md hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors flex items-center gap-1">
+                                  <Sparkles className="h-3 w-3" />
+                                  <span>Optimize</span>
+                                </button>
+                                <button className="text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors flex items-center gap-1">
+                                  <Play className="h-3 w-3" />
+                                  <span>Run & Deploy</span>
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
