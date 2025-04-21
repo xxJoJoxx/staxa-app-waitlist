@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface AnimatedTextCycleProps {
   words: string[];
-  colors?: string[];
+  colors?: string[][];  // Updated to accept gradient color pairs
   interval?: number;
   className?: string;
 }
@@ -16,20 +16,27 @@ export default function AnimatedTextCycle({
   className = "",
 }: AnimatedTextCycleProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [width, setWidth] = useState("auto");
+  const [maxWidth, setMaxWidth] = useState("auto");
   const measureRef = useRef<HTMLDivElement>(null);
 
-  // Get the width of the current word
+  // Find the maximum width of all words
   useEffect(() => {
     if (measureRef.current) {
       const elements = measureRef.current.children;
-      if (elements.length > currentIndex) {
-        // Add a small buffer (10px) to prevent text wrapping
-        const newWidth = elements[currentIndex].getBoundingClientRect().width;
-        setWidth(`${newWidth}px`);
+      let maxWordWidth = 0;
+      
+      // Find the width of the longest word
+      for (let i = 0; i < elements.length; i++) {
+        const width = elements[i].getBoundingClientRect().width;
+        if (width > maxWordWidth) {
+          maxWordWidth = width;
+        }
       }
+      
+      // Add a small buffer (10px) to prevent any potential text wrapping
+      setMaxWidth(`${maxWordWidth + 10}px`);
     }
-  }, [currentIndex]);
+  }, [words]); // Only recalculate when words array changes
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -66,6 +73,32 @@ export default function AnimatedTextCycle({
     },
   };
 
+  // Create gradient style based on colors
+  const getGradientStyle = (index: number) => {
+    if (!colors || !colors[index]) {
+      return { color: undefined };
+    }
+    
+    // For single color (backward compatibility)
+    if (typeof colors[index] === 'string') {
+      return { color: colors[index] };
+    }
+    
+    // For gradient colors
+    const colorPair = colors[index];
+    if (Array.isArray(colorPair) && colorPair.length >= 2) {
+      return { 
+        background: `linear-gradient(90deg, ${colorPair[0]} 0%, ${colorPair[1]} 100%)`,
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        textFillColor: 'transparent'
+      };
+    }
+    
+    return { color: undefined };
+  };
+
   return (
     <>
       {/* Hidden measurement div with all words rendered */}
@@ -85,15 +118,7 @@ export default function AnimatedTextCycle({
       {/* Visible animated word */}
       <motion.span 
         className="relative inline-block"
-        animate={{ 
-          width,
-          transition: { 
-            type: "spring",
-            stiffness: 150,
-            damping: 15,
-            mass: 1.2,
-          }
-        }}
+        style={{ width: maxWidth }} // Use fixed max width for all words
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
@@ -105,7 +130,7 @@ export default function AnimatedTextCycle({
             exit="exit"
             style={{ 
               whiteSpace: "nowrap", 
-              color: colors && colors[currentIndex] ? colors[currentIndex] : undefined 
+              ...getGradientStyle(currentIndex)
             }}
           >
             {words[currentIndex]}

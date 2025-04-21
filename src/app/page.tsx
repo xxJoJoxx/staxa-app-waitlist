@@ -135,14 +135,19 @@ export default function Home() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Deploy to {" "}
+                  One Click Deploy to {" "}
                     <AnimatedTextCycle 
-                      words={["the cloud", "aws", "gcp", "azure"]}
-                      colors={["#3b82f6", "#FF9900", "#4285F4", "#0078D4"]}
+                      words={["the cloud.", "AWS.", "GCP.", "Azure."] }
+                      colors={[
+                        ["#3b82f6", "#2563eb"], // Match the button gradient
+                        ["#FF9900", "#e67700"], // AWS orange gradient
+                        ["#4285F4", "#174ea6"], // GCP blue gradient
+                        ["#0078D4", "#004578"]  // Azure blue gradient
+                      ]}
                       interval={2000}
                       className="" 
                     />
-                    {" "}with One Click
+                    {" "}
                   </h1>
                   <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
                     Staxa simplifies cloud deployments for everyone. Choose from predefined stacks or customize your
@@ -927,7 +932,7 @@ export default function Home() {
                     </div>
                     
                     {/* Infrastructure Dashboard Preview */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
@@ -943,7 +948,7 @@ export default function Home() {
                         </div>
                         
                         {/* Infrastructure Visualization */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
                           {/* Resource Map */}
                           <div className="p-2 mb-3">
                             <div className="text-sm font-medium mb-2">Resource Map</div>
@@ -1091,7 +1096,7 @@ export default function Home() {
                     </div>
                     
                     {/* Development Environment Dashboard */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
@@ -1107,7 +1112,7 @@ export default function Home() {
                         </div>
                         
                         {/* Dev Environment UI */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
                           {/* Left Panel - Service List */}
                           <div className="absolute left-0 top-0 h-full w-[120px] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-2">
                             <div className="text-xs font-medium mb-2">Services</div>
@@ -1257,7 +1262,7 @@ export default function Home() {
                     </div>
                     
                     {/* AI Recommendation Dashboard */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
@@ -1273,7 +1278,7 @@ export default function Home() {
                         </div>
                         
                         {/* AI Recommendation UI */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
                           {/* Optimization Score */}
                           <div className="bg-white dark:bg-gray-900 rounded-md p-3 border border-gray-200 dark:border-gray-700 mb-3">
                             <div className="flex items-center justify-between mb-2">
@@ -1353,6 +1358,41 @@ export default function Home() {
                                 </div>
                               </div>
                             </div>
+                            
+                            {/* Recommendation 4 - Code Improvement */}
+                            <div className="bg-white dark:bg-gray-900 rounded-md p-3 border border-blue-200 dark:border-blue-900">
+                              <div className="flex items-start gap-2">
+                                <div className="h-5 w-5 flex-shrink-0 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mt-0.5">
+                                  <Code className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-medium mb-1">Code Performance Optimization</div>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    We detected inefficient database queries in your API controllers. 
+                                  </p>
+                                  
+                                  {/* Code Comparison */}
+                                  <div className="mt-1 mb-2 bg-gray-50 dark:bg-gray-800 rounded-md overflow-hidden text-[10px] font-mono">
+                                    <div className="bg-red-50 dark:bg-red-900/10 p-1.5 border-l-2 border-red-300 dark:border-red-700">
+                                      <div className="text-red-600 dark:text-red-400">{"- const users = await User.find({});"}</div>
+                                      <div className="text-red-600 dark:text-red-400">{"- const result = users.filter(u => u.status === 'active');"}</div>
+                                    </div>
+                                    <div className="bg-green-50 dark:bg-green-900/10 p-1.5 border-l-2 border-green-300 dark:border-green-700">
+                                      <div className="text-green-600 dark:text-green-400">{"+ const result = await User.find({ status: 'active' });"}</div>
+                                    </div>
+                                  </div>
+                                  
+                                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    This change improves query performance by filtering at the database level instead of in memory.
+                                  </p>
+                                  
+                                  <div className="flex items-center gap-2 mt-2">
+                                    <button className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">Apply</button>
+                                    <button className="text-xs text-gray-500 px-2 py-1">Review Changes</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         
@@ -1402,7 +1442,7 @@ export default function Home() {
                     </div>
                     
                     {/* Application Templates Dashboard */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
@@ -1421,8 +1461,8 @@ export default function Home() {
                           </div>
                         </div>
                         
-                        {/* Templates Gallery */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
+                        {/* Templates UI */}
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
                           {/* Categories */}
                           <div className="flex gap-2 mb-3 flex-wrap">
                             <button className="text-xs rounded-full bg-primary/10 text-primary px-2.5 py-1">
@@ -1588,13 +1628,13 @@ export default function Home() {
                     </div>
                     
                     {/* DevOps Dashboard Preview */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
                             <GitMerge className="h-5 w-5 text-primary" />
-                            <h4 className="font-medium">CI/CD Pipeline Dashboard</h4>
+                            <h4 className="font-medium">CI/CD Pipeline</h4>
                           </div>
                           <div className="flex items-center gap-2">
                             <button className="rounded-md bg-gray-100 p-1 dark:bg-gray-800">
@@ -1603,8 +1643,8 @@ export default function Home() {
                           </div>
                         </div>
                         
-                        {/* CI/CD Pipeline View */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
+                        {/* CI/CD UI */}
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
                           {/* Repository Header */}
                           <div className="flex items-center justify-between mb-3 p-2 bg-white dark:bg-gray-900 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
                             <div className="flex items-center gap-2">
@@ -1762,7 +1802,7 @@ export default function Home() {
                     </div>
                     
                     {/* Testing Dashboard Preview */}
-                    <div className="relative h-[450px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
+                    <div className="relative h-[550px] rounded-xl bg-white dark:bg-gray-900 shadow-lg overflow-hidden border">
                       <div className="absolute inset-0 p-4">
                         {/* Dashboard Header */}
                         <div className="flex items-center justify-between mb-3">
@@ -1778,7 +1818,7 @@ export default function Home() {
                         </div>
                         
                         {/* Testing Dashboard UI */}
-                        <div className="relative h-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
+                        <div className="relative h-[450px] bg-gray-50 dark:bg-gray-800 rounded-lg p-3 overflow-y-auto">
                           {/* Test Suites Tabs */}
                           <div className="flex border-b border-gray-200 dark:border-gray-700 mb-3">
                             <button className="px-3 py-2 text-xs font-medium border-b-2 border-primary text-primary">
