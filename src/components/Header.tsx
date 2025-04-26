@@ -19,6 +19,9 @@ export function Header() {
           <Link href="#how-it-works" className="text-sm font-medium hover:underline underline-offset-4">
             How It Works
           </Link>
+          <Link href="#pricing" className="text-sm font-medium hover:underline underline-offset-4">
+            Pricing
+          </Link>
           <Link href="#waitlist" className="text-sm font-medium hover:underline underline-offset-4">
             Join Waitlist
           </Link>

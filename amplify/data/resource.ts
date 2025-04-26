@@ -12,6 +12,13 @@ const schema = a.schema({
       name: a.string(),
       joinedAt: a.datetime().required(),
       status: a.string().required(),
+      // New fields for waitlist strategy
+      referralCode: a.string(),
+      referredBy: a.string(),
+      referralCount: a.integer().default(0),
+      position: a.integer(),
+      tier: a.string(),
+      marketingOptIn: a.boolean().default(true),
     })
     .authorization((allow) => [
       // Allow unauthenticated users to create entries but not read them
@@ -56,7 +63,10 @@ export const data = defineData({
  *   email: "user@example.com",
  *   name: "User Name",
  *   joinedAt: new Date().toISOString(),
- *   status: "active"
+ *   status: "active",
+ *   referralCode: "abc123",
+ *   position: 1,
+ *   tier: "founding"
  * });
  * 
  * // List all entries (admin only)

@@ -12,8 +12,13 @@ const client = generateClient<Schema>();
 /**
  * Sends a waitlist confirmation email to the user
  */
-export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
+export async function sendWaitlistConfirmationEmail(to: string, name?: string, referralCode?: string) {
   try {
+    // Create the referral URL
+    const referralUrl = referralCode 
+      ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://staxa.dev'}?ref=${referralCode}`
+      : null;
+
     // Create the HTML email content
     const htmlContent = `
       <!DOCTYPE html>
@@ -56,6 +61,24 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
                       Thank you for joining our waitlist! We're working hard to build an amazing product and can't wait to share it with you. We'll notify you as soon as you're granted access to Staxa.
                     </p>
 
+                    ${referralUrl ? `
+                    <!-- Referral Info -->
+                    <div style="background-color: #eef2ff; border-radius: 8px; padding: 20px; margin-bottom: 24px; border-left: 4px solid #6366f1;">
+                      <p style="color: #111827; font-weight: 600; margin: 0 0 12px;">Want to move up the waitlist?</p>
+                      <p style="color: #374151; margin: 0 0 12px;">Share your referral link with friends and get bumped up 5 spots for each person who joins!</p>
+                      <div style="background-color: #ffffff; border-radius: 4px; border: 1px solid #e5e7eb; padding: 8px; margin-bottom: 16px; word-break: break-all;">
+                        <a href="${referralUrl}" style="color: #4f46e5; text-decoration: none;">${referralUrl}</a>
+                      </div>
+                      <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                        <tr>
+                          <td style="text-align: center;">
+                            <a href="https://twitter.com/intent/tweet?text=I%20just%20joined%20the%20Staxa%20waitlist%20to%20get%20early%20access%20to%20simple%20cloud%20deployments!%20Join%20me:%20${encodeURIComponent(referralUrl)}" style="background-color: #4f46e5; color: #ffffff; padding: 8px 16px; border-radius: 4px; text-decoration: none; display: inline-block; font-weight: 500;">Share on Twitter</a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    ` : ''}
+
                     <!-- Features -->
                     <div style="background-color: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
                       <p style="color: #111827; font-weight: 600; margin: 0 0 12px;">With Staxa, you can:</p>
@@ -65,12 +88,22 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string) {
                         <li style="margin-bottom: 0;">Monitor your deployments in real-time</li>
                       </ul>
                     </div>
+                    
+                    <!-- Exclusive Offer -->
+                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+                      <p style="color: #111827; font-weight: 600; margin: 0 0 12px;">Exclusive Waitlist Benefit:</p>
+                      <p style="color: #374151; margin: 0 0 8px;">As an early supporter, you'll receive a lifetime discount on your subscription when we launch!</p>
+                      <p style="color: #4f46e5; font-weight: 700; margin: 0;">Get up to 40% off our regular prices, forever.</p>
+                    </div>
                   </div>
 
                   <!-- Footer -->
                   <div style="text-align: center; padding: 24px 0;">
                     <p style="color: #6b7280; font-size: 14px; margin: 0;">
                       &copy; ${new Date().getFullYear()} Staxa. All rights reserved.
+                    </p>
+                    <p style="color: #6b7280; font-size: 14px; margin: 8px 0 0;">
+                      Don't want to receive updates? <a href="#" style="color: #4f46e5; text-decoration: underline;">Unsubscribe</a>
                     </p>
                   </div>
                 </div>
