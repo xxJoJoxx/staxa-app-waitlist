@@ -200,16 +200,16 @@ export default function Home() {
                   How It Works
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Simple Deployment Process</h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                   Deploy your applications to the cloud in four simple steps. No complex configuration required.
                 </p>
               </div>
             </div>
             
             {/* Interactive Deployment Steps */}
-            <div className="mt-12 relative max-w-4xl mx-auto">
+            <div className="mt-12 relative max-w-2xl mx-auto bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800" style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)' }}>
               {/* Step Navigation */}
-              <div className="flex justify-between mb-4 relative z-10">
+              <div className="flex justify-between p-4 relative z-10 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-4">
                   {[0, 1, 2, 3].map((step) => (
                     <button
@@ -246,14 +246,14 @@ export default function Home() {
               </div>
               
               {/* Step Content */}
-              <div className="relative aspect-[5/3] sm:aspect-[3/2] md:aspect-[2/1]"
+              <div className="relative w-full h-[450px]"
                 onMouseEnter={pauseCarousel}
                 onMouseLeave={resumeCarousel}
                 onTouchStart={pauseCarousel}
                 onTouchEnd={resumeCarousel}
               >
                 {/* Step Progress Bar */}
-                <div className="absolute top-0 left-0 h-1 bg-gray-100 dark:bg-gray-800 w-full rounded-full overflow-hidden z-0">
+                <div className="absolute top-0 left-0 h-1 bg-gray-100 dark:bg-gray-800 w-full overflow-hidden z-0">
                   <div 
                     className="h-full bg-primary transition-all duration-300 ease-in-out rounded-full"
                     style={{ width: `${(currentSlide + 1) / 4 * 100}%` }}  
@@ -263,25 +263,25 @@ export default function Home() {
                 {/* Step Cards */}
                 <div className="mt-2 h-full">
                   {/* Code element with carousel */}
-                  <div className="carousel-container overflow-hidden">
+                  <div className="carousel-container overflow-hidden h-full">
                     <div 
-                      className="carousel-track flex transition-transform duration-300 ease-in-out"
+                      className="carousel-track flex h-full transition-transform duration-300 ease-in-out"
                       style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
                       {/* Step 1: Application Selection */}
-                      <div className="carousel-item flex-shrink-0 w-full">
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-                          <div className="space-y-6">
+                      <div className="carousel-item flex-shrink-0 w-full px-4 py-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg p-4">
+                          <div className="space-y-3">
                             <div className="flex items-center justify-between">
                               <h3 className="font-medium">Step 1: Select Application Type</h3>
                             </div>
                             
                             {/* App Type Options */}
-                            <div className="space-y-3">
-                              <div className="rounded-lg border-2 border-primary p-3 bg-primary/5 dark:bg-primary/10">
-                                <div className="flex items-center gap-3">
-                                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 dark:bg-primary/20">
-                                    <Layers className="h-4 w-4 text-primary" />
+                            <div className="space-y-2">
+                              <div className="rounded-lg border-2 border-primary p-2 bg-primary/5 dark:bg-primary/10">
+                                <div className="flex items-center gap-2">
+                                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 dark:bg-primary/20">
+                                    <Layers className="h-3.5 w-3.5 text-primary" />
                                   </div>
                                   <div>
                                     <div className="text-sm font-medium">Web Application</div>
@@ -292,10 +292,10 @@ export default function Home() {
                                 </div>
                               </div>
                               
-                              <div className="rounded-lg border border-transparent p-3 bg-gray-50 dark:bg-gray-800">
-                                <div className="flex items-center gap-3">
-                                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-200 dark:bg-gray-700">
-                                    <Server className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                              <div className="rounded-lg border border-transparent p-2 bg-gray-50 dark:bg-gray-800">
+                                <div className="flex items-center gap-2">
+                                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gray-200 dark:bg-gray-700">
+                                    <Server className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
                                   </div>
                                   <div>
                                     <div className="text-sm font-medium">API Service</div>
@@ -306,10 +306,10 @@ export default function Home() {
                                 </div>
                               </div>
                               
-                              <div className="rounded-lg border border-transparent p-3 bg-gray-50 dark:bg-gray-800">
-                                <div className="flex items-center gap-3">
-                                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-200 dark:bg-gray-700">
-                                    <Globe className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                              <div className="rounded-lg border border-transparent p-2 bg-gray-50 dark:bg-gray-800">
+                                <div className="flex items-center gap-2">
+                                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gray-200 dark:bg-gray-700">
+                                    <Globe className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
                                   </div>
                                   <div>
                                     <div className="text-sm font-medium">Static Website</div>
@@ -322,10 +322,10 @@ export default function Home() {
                             </div>
                             
                             {/* Spacer to match height with other cards */}
-                            <div className="py-10"></div>
+                            <div className="py-5"></div>
                             
                             {/* Continue Button */}
-                            <Button className="w-full" onClick={nextSlide}>
+                            <Button className="w-full" variant="outline" onClick={nextSlide}>
                               Continue
                               <ArrowRight className="ml-2 h-4 w-4" />
                             </Button>
@@ -334,9 +334,9 @@ export default function Home() {
                       </div>
                       
                       {/* Step 2: Source Code Selection */}
-                      <div className="carousel-item flex-shrink-0 w-full">
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-                          <div className="space-y-6">
+                      <div className="carousel-item flex-shrink-0 w-full px-4 py-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg p-4">
+                          <div className="space-y-4">
                             <div className="flex items-center justify-between">
                               <h3 className="font-medium">Step 2: Connect Your Code</h3>
                             </div>
@@ -358,7 +358,7 @@ export default function Home() {
                               </div>
 
                               {/* Branch Selection */}
-                              <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
+                              <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md border border-gray-100 dark:border-gray-700">
                                 <div className="flex items-center justify-between mb-2">
                                   <div className="text-xs font-medium">Branch</div>
                                   <div className="flex items-center gap-1 text-xs text-gray-500">
@@ -390,10 +390,10 @@ export default function Home() {
                             </div>
                             
                             {/* Spacer to match height with other cards */}
-                            <div className="py-6"></div>
+                            <div className="py-2"></div>
                             
                             {/* Continue Button */}
-                            <Button className="w-full" onClick={nextSlide}>
+                            <Button className="w-full" variant="outline" onClick={nextSlide}>
                               Continue
                               <ArrowRight className="ml-2 h-4 w-4" />
                             </Button>
@@ -402,9 +402,9 @@ export default function Home() {
                       </div>
                       
                       {/* Step 3: Stack Selection */}
-                      <div className="carousel-item flex-shrink-0 w-full">
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-                          <div className="space-y-4">
+                      <div className="carousel-item flex-shrink-0 w-full px-4 py-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg p-4">
+                          <div className="space-y-3">
                             <div className="flex items-center gap-2">
                               <h3 className="font-medium">Step 3: Select a Stack Template</h3>
                               <div className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary flex items-center gap-1">
@@ -486,7 +486,7 @@ export default function Home() {
                             </div>
                             
                             {/* Deploy Button */}
-                            <Button className="w-full" onClick={nextSlide}>
+                            <Button className="w-full" variant="default" onClick={nextSlide}>
                               Deploy Now
                               <ArrowRight className="ml-2 h-4 w-4" />
                             </Button>
@@ -495,8 +495,8 @@ export default function Home() {
                       </div>
                       
                       {/* Step 4: Deployment in Progress */}
-                      <div className="carousel-item flex-shrink-0 w-full">
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                      <div className="carousel-item flex-shrink-0 w-full px-4 py-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg p-4">
                           <div className="space-y-6">
                             {/* Header */}
                             <div className="flex items-center justify-between">
@@ -561,7 +561,7 @@ export default function Home() {
                                 </div>
                                 <div className="flex items-center gap-3">
                                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
-                                    <Loader2 className="h-3 w-3 text-blue-600 dark:text-blue-400 animate-spin" />
+                                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400 animate-spin" />
                                   </div>
                                   <div className="flex-1">
                                     <div className="text-sm">Building and deploying application</div>
@@ -586,11 +586,11 @@ export default function Home() {
                             <div className="flex justify-between items-center">
                               <div className="text-xs text-gray-500 dark:text-gray-400">Estimated time: 3-5 minutes</div>
                               <div className="flex gap-2">
-                                <Button variant="outline" size="sm">
+                                <Button variant="outline" size="sm" className="border-gray-200 dark:border-gray-700">
                                   <Share2 className="h-3.5 w-3.5 mr-1" />
                                   Share
                                 </Button>
-                                <Button size="sm">
+                                <Button size="sm" variant="default">
                                   View Details
                                 </Button>
                               </div>
