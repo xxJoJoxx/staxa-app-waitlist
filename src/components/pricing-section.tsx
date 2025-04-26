@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { Check, ArrowRight, Loader2 } from "lucide-react"
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -184,12 +183,6 @@ export function PricingSection() {
   const spotsRemaining = waitlistStats?.spotsRemaining || {
     founding: 37,  // Fallback values if API not available
     early: 328,
-    priority: 500
-  };
-  
-  const totalSpots = waitlistStats?.tierCapacity || {
-    founding: 100,
-    early: 400,
     priority: 500
   };
   
@@ -430,11 +423,11 @@ export function PricingSection() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="p-4 rounded-lg bg-white dark:bg-gray-800 border">
               <h4 className="font-medium mb-2">Grandfathered Pricing</h4>
-              <p className="text-sm text-muted-foreground">Your founder's rate never increases as long as your subscription remains active</p>
+              <p className="text-sm text-muted-foreground">Your founder&apos;s rate never increases as long as your subscription remains active</p>
             </div>
             <div className="p-4 rounded-lg bg-white dark:bg-gray-800 border">
               <h4 className="font-medium mb-2">Early Feature Access</h4>
-              <p className="text-sm text-muted-foreground">Vote on and test new features before they're released to the public</p>
+              <p className="text-sm text-muted-foreground">Vote on and test new features before they&apos;re released to the public</p>
             </div>
             <div className="p-4 rounded-lg bg-white dark:bg-gray-800 border">
               <h4 className="font-medium mb-2">Priority Support</h4>

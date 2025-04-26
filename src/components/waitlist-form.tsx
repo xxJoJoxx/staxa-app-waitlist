@@ -26,11 +26,6 @@ export default function WaitlistForm() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target
-    setFormData(prev => ({ ...prev, [name]: checked }))
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const { email } = formData

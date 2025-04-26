@@ -41,7 +41,7 @@ export async function GET() {
     console.log(`GET /api/waitlist-stats - Fetched ${entries.data.length} entries from Amplify API`);
     
     // If no entries were found via Amplify API, try direct DynamoDB access
-    let tierCounts = {
+    const tierCounts = {
       founding: 0,
       early: 0,
       priority: 0,

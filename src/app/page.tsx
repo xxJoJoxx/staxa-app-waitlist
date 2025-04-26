@@ -1864,7 +1864,7 @@ export default function Home() {
                     <h3 className="font-semibold text-lg">Priority Support</h3>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Waitlist members get fast-track support and early access to new features before they're released to the public.
+                    Waitlist members get fast-track support and early access to new features before they&apos;re released to the public.
                   </p>
                 </div>
               </div>
