@@ -16,7 +16,7 @@ export async function sendWaitlistConfirmationEmail(to: string, name?: string, r
   try {
     // Create the referral URL
     const referralUrl = referralCode 
-      ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://staxa.dev'}?ref=${referralCode}`
+      ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://staxa.app'}?ref=${referralCode}`
       : null;
 
     // Create the HTML email content
