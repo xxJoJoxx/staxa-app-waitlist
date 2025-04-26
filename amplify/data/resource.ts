@@ -21,8 +21,8 @@ const schema = a.schema({
       marketingOptIn: a.boolean().default(true),
     })
     .authorization((allow) => [
-      // Allow unauthenticated users to create entries but not read them
-      allow.guest().to(['create']),
+      // Allow unauthenticated users to create entries AND read them for stats
+      allow.guest().to(['create', 'read']),
       // Allow authenticated admins to do everything
       allow.authenticated().to(['create', 'read', 'update', 'delete']),
     ]),
