@@ -132,12 +132,12 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+        <section className="w-full py-6 sm:py-12 md:py-16 lg:py-24 xl:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col md:grid md:grid-cols-[1fr_400px] md:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">
                   One Click Deploy to {" "}
                     <AnimatedTextCycle 
                       words={["the cloud.", "AWS.", "GCP.", "Azure."] }
@@ -152,7 +152,7 @@ export default function Home() {
                     />
                     {" "}
                   </h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+                  <p className="max-w-[600px] text-gray-500 text-sm sm:text-base md:text-xl dark:text-gray-400">
                   Your next unicorn is a click away. No more stressing over the ideal stack and figuring out how to deploy it.
                   With{" "}
                   <span className="bg-gradient-to-r from-[#3b82f6] to-[#2563eb] bg-clip-text text-transparent font-semibold">
@@ -164,7 +164,7 @@ export default function Home() {
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link href="#waitlist">
                     <Button 
-                      className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium text-white shadow hover:shadow-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 gradient-btn pulse-halo"
+                      className="inline-flex h-12 px-6 sm:h-10 sm:px-8 items-center justify-center rounded-md text-sm font-medium text-white shadow hover:shadow-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 gradient-btn pulse-halo"
                     >
                       Join the Waitlist
                       <ArrowRight className="ml-2 h-4 w-4" />
