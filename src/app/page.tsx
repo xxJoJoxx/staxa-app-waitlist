@@ -173,15 +173,15 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex items-center justify-start md:justify-end mt-8 md:mt-0">
-                <div className="flex flex-col w-full max-w-[550px] md:max-w-[650px] xl:max-w-[700px] gap-4">
+                <div className="flex flex-col w-full max-w-[600px] md:max-w-[750px] xl:max-w-[850px] gap-4">
                   {/* Cloud Deployment Image */}
                   <div className="relative w-full overflow-visible flex justify-center">
                     <Image
-                      src="/images/cloud-deployment.png" 
+                      src="/images/hero-vectorart-01.png" 
                       alt="Cloud Deployment Illustration"
-                      width={1000}
-                      height={1000}
-                      className="w-auto h-auto max-w-full object-contain"
+                      width={1200}
+                      height={1200}
+                      className="w-auto h-auto max-w-[120%] md:max-w-[130%] xl:max-w-[140%] object-contain"
                       priority
                     />
                   </div>
