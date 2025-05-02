@@ -2249,7 +2249,7 @@ export default function Home() {
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border max-w-3xl mt-4">
                 <h3 className="font-semibold text-lg mb-3">Progressive Tier System</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  We're using a progressive tier system to reward our earliest supporters. Each tier has limited spots and offers a different lifetime discount:
+                  We&apos;re using a progressive tier system to reward our earliest supporters. Each tier has limited spots and offers a different lifetime discount:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-md border border-blue-100 dark:border-blue-800">
