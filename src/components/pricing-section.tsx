@@ -160,6 +160,15 @@ export function PricingSection() {
         
         if (data.success) {
           setWaitlistStats(data.stats);
+          
+          // Automatically set active discount to the earliest available tier
+          if (data.stats.spotsRemaining.founding <= 0 && data.stats.spotsRemaining.early > 0) {
+            setActiveDiscount("early");
+          } else if (data.stats.spotsRemaining.founding <= 0 && data.stats.spotsRemaining.early <= 0 && data.stats.spotsRemaining.priority > 0) {
+            setActiveDiscount("priority");
+          } else {
+            setActiveDiscount("founding");
+          }
         } else {
           throw new Error(data.error || 'Unknown error');
         }
@@ -191,6 +200,14 @@ export function PricingSection() {
     early: 18,     // (100 - 328/400 * 100)%
     priority: 0    // (100 - 500/500 * 100)%
   };
+  
+  // Determine which tiers to show based on availability
+  const showFoundingTier = spotsRemaining.founding > 0;
+  const showEarlyTier = !showFoundingTier && spotsRemaining.early > 0;
+  const showPriorityTier = !showFoundingTier && !showEarlyTier && spotsRemaining.priority > 0;
+  
+  // Show the relevant tier or all if none are available (fallback)
+  const visibleTier = showFoundingTier ? "founding" : (showEarlyTier ? "early" : (showPriorityTier ? "priority" : null));
 
   return (
     <div className="container px-4 md:px-6 py-8">
@@ -206,99 +223,109 @@ export function PricingSection() {
         </div>
       </div>
       
-      {/* Discount Tier Selection */}
+      {/* Discount Tier Selection - Now Progressive */}
       <div className="max-w-3xl mx-auto mb-10">
         <div className="bg-muted/30 p-4 rounded-lg">
-          <div className="flex flex-col md:flex-row gap-4 mb-5">
-            <div 
-              className={cn(
-                "flex-1 p-4 rounded-lg border-2 cursor-pointer transition-all",
-                activeDiscount === "founding" 
-                  ? "border-blue-500 bg-blue-50/50 dark:bg-blue-900/20" 
-                  : "border-transparent hover:border-blue-200 dark:hover:border-blue-800"
-              )}
-              onClick={() => setActiveDiscount("founding")}
-            >
-              <h3 className="font-bold text-lg mb-1">Founding Members</h3>
-              <p className="text-muted-foreground text-sm mb-2">First 100 users</p>
-              <div className="flex items-center justify-between mb-1 text-sm">
-                <span>40% Lifetime Discount</span>
-                {isLoading ? (
-                  <span className="font-bold text-blue-600 flex items-center">
-                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                    Loading...
-                  </span>
-                ) : (
-                  <span className="font-bold text-blue-600">{spotsRemaining.founding} spots left</span>
-                )}
+          <div className="flex flex-col gap-4 mb-5">
+            {/* Founding Members Tier - Only show if spots are available */}
+            {showFoundingTier && (
+              <div 
+                className="flex-1 p-4 rounded-lg border-2 border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 transform transition-all duration-300"
+                onClick={() => setActiveDiscount("founding")}
+              >
+                <h3 className="font-bold text-lg mb-1">Founding Members</h3>
+                <p className="text-muted-foreground text-sm mb-2">First 100 users</p>
+                <div className="flex items-center justify-between mb-1 text-sm">
+                  <span>40% Lifetime Discount</span>
+                  {isLoading ? (
+                    <span className="font-bold text-blue-600 flex items-center">
+                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                      Loading...
+                    </span>
+                  ) : (
+                    <span className="font-bold text-blue-600">{spotsRemaining.founding} spots left</span>
+                  )}
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div 
+                    className="h-2 rounded-full bg-blue-500" 
+                    style={{ width: `${percentageFilled.founding}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="h-2 rounded-full bg-blue-500" 
-                  style={{ width: `${percentageFilled.founding}%` }}
-                ></div>
-              </div>
-            </div>
+            )}
             
-            <div 
-              className={cn(
-                "flex-1 p-4 rounded-lg border-2 cursor-pointer transition-all",
-                activeDiscount === "early" 
-                  ? "border-blue-500 bg-blue-50/50 dark:bg-blue-900/20" 
-                  : "border-transparent hover:border-blue-200 dark:hover:border-blue-800"
-              )}
-              onClick={() => setActiveDiscount("early")}
-            >
-              <h3 className="font-bold text-lg mb-1">Early Adopters</h3>
-              <p className="text-muted-foreground text-sm mb-2">Next 400 users</p>
-              <div className="flex items-center justify-between mb-1 text-sm">
-                <span>30% Lifetime Discount</span>
-                {isLoading ? (
-                  <span className="font-bold text-blue-600 flex items-center">
-                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                    Loading...
-                  </span>
-                ) : (
-                  <span className="font-bold text-blue-600">{spotsRemaining.early} spots left</span>
-                )}
+            {/* Early Adopters Tier - Only show if founding is full and spots are available */}
+            {showEarlyTier && (
+              <div 
+                className="flex-1 p-4 rounded-lg border-2 border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 transform transition-all duration-300"
+                onClick={() => setActiveDiscount("early")}
+              >
+                <h3 className="font-bold text-lg mb-1">Early Adopters</h3>
+                <p className="text-muted-foreground text-sm mb-2">Next 400 users</p>
+                <div className="flex items-center justify-between mb-1 text-sm">
+                  <span>30% Lifetime Discount</span>
+                  {isLoading ? (
+                    <span className="font-bold text-blue-600 flex items-center">
+                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                      Loading...
+                    </span>
+                  ) : (
+                    <span className="font-bold text-blue-600">{spotsRemaining.early} spots left</span>
+                  )}
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div 
+                    className="h-2 rounded-full bg-blue-500" 
+                    style={{ width: `${percentageFilled.early}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="h-2 rounded-full bg-blue-500" 
-                  style={{ width: `${percentageFilled.early}%` }}
-                ></div>
-              </div>
-            </div>
+            )}
             
-            <div 
-              className={cn(
-                "flex-1 p-4 rounded-lg border-2 cursor-pointer transition-all",
-                activeDiscount === "priority" 
-                  ? "border-blue-500 bg-blue-50/50 dark:bg-blue-900/20" 
-                  : "border-transparent hover:border-blue-200 dark:hover:border-blue-800"
-              )}
-              onClick={() => setActiveDiscount("priority")}
-            >
-              <h3 className="font-bold text-lg mb-1">Priority Access</h3>
-              <p className="text-muted-foreground text-sm mb-2">Next 500 users</p>
-              <div className="flex items-center justify-between mb-1 text-sm">
-                <span>20% Lifetime Discount</span>
-                {isLoading ? (
-                  <span className="font-bold text-blue-600 flex items-center">
-                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                    Loading...
-                  </span>
-                ) : (
-                  <span className="font-bold text-blue-600">{spotsRemaining.priority} spots left</span>
-                )}
+            {/* Priority Access Tier - Only show if founding and early are full and spots are available */}
+            {showPriorityTier && (
+              <div 
+                className="flex-1 p-4 rounded-lg border-2 border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 transform transition-all duration-300"
+                onClick={() => setActiveDiscount("priority")}
+              >
+                <h3 className="font-bold text-lg mb-1">Priority Access</h3>
+                <p className="text-muted-foreground text-sm mb-2">Next 500 users</p>
+                <div className="flex items-center justify-between mb-1 text-sm">
+                  <span>20% Lifetime Discount</span>
+                  {isLoading ? (
+                    <span className="font-bold text-blue-600 flex items-center">
+                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                      Loading...
+                    </span>
+                  ) : (
+                    <span className="font-bold text-blue-600">{spotsRemaining.priority} spots left</span>
+                  )}
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div 
+                    className="h-2 rounded-full bg-blue-500" 
+                    style={{ width: `${percentageFilled.priority}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="h-2 rounded-full bg-blue-500" 
-                  style={{ width: `${percentageFilled.priority}%` }}
-                ></div>
+            )}
+            
+            {/* Show a message if all tiers are full */}
+            {!visibleTier && (
+              <div className="flex-1 p-4 rounded-lg border-2 border-gray-300 bg-gray-50 dark:bg-gray-800/50 dark:border-gray-700">
+                <h3 className="font-bold text-lg mb-1">Join Standard Waitlist</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  All special discount tiers are currently full. Join our standard waitlist to get access when we launch.
+                </p>
+                <Button asChild size="sm" className="w-full mb-2">
+                  <Link href="#waitlist">
+                    Join Standard Waitlist
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
-            </div>
+            )}
           </div>
           
           {/* Error Message */}
@@ -308,38 +335,44 @@ export function PricingSection() {
             </div>
           )}
           
-          {/* Pricing Toggle */}
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <button 
-              className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                !showDiscounted 
-                  ? "bg-primary text-white" 
-                  : "hover:bg-gray-200 dark:hover:bg-gray-800"
-              )}
-              onClick={() => setShowDiscounted(false)}
-            >
-              Regular Pricing
-            </button>
-            <button 
-              className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                showDiscounted 
-                  ? "bg-primary text-white" 
-                  : "hover:bg-gray-200 dark:hover:bg-gray-800"
-              )}
-              onClick={() => setShowDiscounted(true)}
-            >
-              Founder Pricing
-            </button>
-          </div>
-          
-          <p className="text-center text-sm text-muted-foreground">
-            {showDiscounted 
-              ? `Secure a ${discountRates[activeDiscount] * 100}% lifetime discount by joining our waitlist today` 
-              : "Regular pricing after launch"
-            }
-          </p>
+          {/* Pricing Toggle - Only show if a tier is available */}
+          {visibleTier && (
+            <>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <button 
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    !showDiscounted 
+                      ? "bg-primary text-white" 
+                      : "hover:bg-gray-200 dark:hover:bg-gray-800"
+                  )}
+                  onClick={() => setShowDiscounted(false)}
+                >
+                  Regular Pricing
+                </button>
+                <button 
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    showDiscounted 
+                      ? "bg-primary text-white" 
+                      : "hover:bg-gray-200 dark:hover:bg-gray-800"
+                  )}
+                  onClick={() => setShowDiscounted(true)}
+                >
+                  {visibleTier === "founding" ? "Founder Pricing" : 
+                   visibleTier === "early" ? "Early Adopter Pricing" : 
+                   "Priority Access Pricing"}
+                </button>
+              </div>
+              
+              <p className="text-center text-sm text-muted-foreground">
+                {showDiscounted 
+                  ? `Secure a ${discountRates[activeDiscount] * 100}% lifetime discount by joining our waitlist today` 
+                  : "Regular pricing after launch"
+                }
+              </p>
+            </>
+          )}
         </div>
       </div>
       

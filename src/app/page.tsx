@@ -2236,13 +2236,56 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <div className="inline-flex items-center rounded-full border bg-gradient-to-r from-blue-100 via-white to-orange-100 dark:from-blue-950/40 dark:via-gray-900 dark:to-orange-950/40 px-2.5 py-0.5 text-sm font-semibold">
-                  Early Access
+                  Limited Availability
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Join Our Waitlist</h2>
                 <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                   Be the first to experience simplified cloud deployments with our powerful platform. 
                   Get early access to all our advanced features and lock in <span className="font-semibold text-primary">exclusive lifetime discounts</span>.
                 </p>
+              </div>
+              
+              {/* Tiered Access Explanation */}
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border max-w-3xl mt-4">
+                <h3 className="font-semibold text-lg mb-3">Progressive Tier System</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  We're using a progressive tier system to reward our earliest supporters. Each tier has limited spots and offers a different lifetime discount:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-md border border-blue-100 dark:border-blue-800">
+                    <h4 className="font-medium text-blue-800 dark:text-blue-300 mb-1">Founding Members</h4>
+                    <div className="text-sm text-blue-700 dark:text-blue-400">
+                      <span className="font-bold">40% discount</span>
+                    </div>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                      First 100 members only
+                    </p>
+                  </div>
+                  <div className="bg-blue-50/50 dark:bg-blue-900/10 p-3 rounded-md border border-blue-100/50 dark:border-blue-800/50">
+                    <h4 className="font-medium text-blue-800/80 dark:text-blue-300/80 mb-1">Early Adopters</h4>
+                    <div className="text-sm text-blue-700/80 dark:text-blue-400/80">
+                      <span className="font-bold">30% discount</span>
+                    </div>
+                    <p className="text-xs text-blue-600/80 dark:text-blue-400/80 mt-1">
+                      Next 400 members
+                    </p>
+                  </div>
+                  <div className="bg-blue-50/30 dark:bg-blue-900/5 p-3 rounded-md border border-blue-100/30 dark:border-blue-800/30">
+                    <h4 className="font-medium text-blue-800/60 dark:text-blue-300/60 mb-1">Priority Access</h4>
+                    <div className="text-sm text-blue-700/60 dark:text-blue-400/60">
+                      <span className="font-bold">20% discount</span>
+                    </div>
+                    <p className="text-xs text-blue-600/60 dark:text-blue-400/60 mt-1">
+                      Next 500 members
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-md border border-amber-100 dark:border-amber-800/50 text-sm">
+                  <span className="font-medium text-amber-800 dark:text-amber-300">Important:</span>{" "}
+                  <span className="text-amber-700 dark:text-amber-400">
+                    Each tier will only be available once the previous tier is fully subscribed. Join now to secure the best possible discount!
+                  </span>
+                </div>
               </div>
               
               {/* Benefits */}
@@ -2255,7 +2298,7 @@ export default function Home() {
                     <h3 className="font-semibold text-lg">Lifetime Discount</h3>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Early adopters receive up to 40% off regular pricing that never expires as long as your subscription remains active.
+                    Early adopters receive a permanent discount that never expires as long as your subscription remains active.
                   </p>
                 </div>
                 

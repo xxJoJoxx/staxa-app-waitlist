@@ -10,6 +10,17 @@ import { Loader2, CheckCircle, Share2 } from "lucide-react"
 import { isValidEmail } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
 
+// Define tier types and constants
+type WaitlistTier = 'founding' | 'early' | 'priority' | 'standard';
+
+interface WaitlistStats {
+  totalEntries: number;
+  tierCounts: Record<string, number>;
+  spotsRemaining: Record<string, number>;
+  percentageFilled: Record<string, number>;
+  tierCapacity: Record<string, number>;
+}
+
 export default function WaitlistForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,11 +31,47 @@ export default function WaitlistForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
   const [referralLink, setReferralLink] = useState<string | null>(null)
+  const [waitlistStats, setWaitlistStats] = useState<WaitlistStats | null>(null)
+  const [currentTier, setCurrentTier] = useState<WaitlistTier>("founding")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
+
+  // Fetch waitlist stats to determine current tier
+  useEffect(() => {
+    const fetchWaitlistStats = async () => {
+      try {
+        const response = await fetch('/api/waitlist-stats');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch waitlist statistics');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          setWaitlistStats(data.stats);
+          
+          // Determine current tier based on availability
+          if (data.stats.spotsRemaining.founding > 0) {
+            setCurrentTier("founding");
+          } else if (data.stats.spotsRemaining.early > 0) {
+            setCurrentTier("early");
+          } else if (data.stats.spotsRemaining.priority > 0) {
+            setCurrentTier("priority");
+          } else {
+            setCurrentTier("standard");
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching waitlist stats:', error);
+      }
+    };
+    
+    fetchWaitlistStats();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -84,6 +131,40 @@ export default function WaitlistForm() {
     }
   }
 
+  // Get tier-specific messaging
+  const getTierMessage = () => {
+    switch (currentTier) {
+      case "founding":
+        return {
+          title: "Founding Member Tier",
+          discount: "40%",
+          urgency: `Only ${waitlistStats?.spotsRemaining.founding || 'limited'} spots left!`,
+          description: "Join as a Founding Member to lock in 40% lifetime discount that never expires as long as your subscription remains active."
+        };
+      case "early":
+        return {
+          title: "Early Adopter Tier",
+          discount: "30%",
+          urgency: `Only ${waitlistStats?.spotsRemaining.early || 'limited'} spots left!`,
+          description: "Join as an Early Adopter to lock in 30% lifetime discount that never expires as long as your subscription remains active."
+        };
+      case "priority":
+        return {
+          title: "Priority Access Tier",
+          discount: "20%",
+          urgency: `Only ${waitlistStats?.spotsRemaining.priority || 'limited'} spots left!`,
+          description: "Join with Priority Access to lock in 20% lifetime discount that never expires as long as your subscription remains active."
+        };
+      default:
+        return {
+          title: "Standard Waitlist",
+          discount: "",
+          urgency: "",
+          description: "Join our waitlist to get access when we launch."
+        };
+    }
+  };
+
   // Check if URL has a referral code
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -94,6 +175,8 @@ export default function WaitlistForm() {
       }
     }
   }, [])
+
+  const tierMessage = getTierMessage();
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -155,6 +238,25 @@ export default function WaitlistForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm border space-y-4">
+          {currentTier !== "standard" && (
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-md border border-blue-100 dark:border-blue-800 mb-4">
+              <h3 className="font-medium text-blue-800 dark:text-blue-300 mb-1">{tierMessage.title}</h3>
+              {tierMessage.discount && (
+                <div className="text-sm text-blue-700 dark:text-blue-400 mb-1">
+                  <span className="font-bold">{tierMessage.discount} lifetime discount</span>
+                </div>
+              )}
+              {tierMessage.urgency && (
+                <div className="text-sm text-red-600 dark:text-red-400 font-medium mb-1">
+                  {tierMessage.urgency}
+                </div>
+              )}
+              <p className="text-xs text-blue-600 dark:text-blue-400">
+                {tierMessage.description}
+              </p>
+            </div>
+          )}
+          
           <div className="space-y-2">
             <Label htmlFor="name">Name (optional)</Label>
             <Input
@@ -199,20 +301,17 @@ export default function WaitlistForm() {
             </div>
           )}
           
-          <div className="flex items-start space-x-2 pt-2">
-            <Checkbox 
-              id="marketingOptIn" 
-              name="marketingOptIn"
+          <div className="flex items-center space-x-2 pt-2">
+            <Checkbox
+              id="marketingOptIn"
               checked={formData.marketingOptIn}
-              onCheckedChange={(checked) => {
-                setFormData(prev => ({ ...prev, marketingOptIn: checked === true }))
-              }}
+              onCheckedChange={(checked) => setFormData(prev => ({ ...prev, marketingOptIn: checked === true }))}
             />
             <label
               htmlFor="marketingOptIn"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Email me about product updates and feature releases
+              Send me product updates and news
             </label>
           </div>
           
@@ -220,15 +319,23 @@ export default function WaitlistForm() {
             {status === "loading" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Joining...
+                Processing...
               </>
             ) : (
-              "Join Waitlist"
+              <>
+                {currentTier === "founding" && "Join as Founding Member"}
+                {currentTier === "early" && "Join as Early Adopter"}
+                {currentTier === "priority" && "Get Priority Access"}
+                {currentTier === "standard" && "Join Waitlist"}
+              </>
             )}
           </Button>
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            We&apos;ll never share your email with anyone else.
-          </p>
+          
+          {currentTier !== "standard" && (
+            <p className="text-xs text-gray-500 dark:text-gray-400 pt-2 text-center">
+              Once this tier is full, only the next tier will be available. Your place in line is based on when you join.
+            </p>
+          )}
         </form>
       )}
     </div>
